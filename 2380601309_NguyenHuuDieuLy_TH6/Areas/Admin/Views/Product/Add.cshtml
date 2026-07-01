@@ -1,0 +1,58 @@
+@model _2380601309_NguyenHuuDieuLy_TH6.Models.Product
+
+@{
+    ViewData["Title"] = "Thêm Sản Phẩm";
+}
+
+<div class="container mt-4">
+    <h2>Thêm Sản Phẩm Mới</h2>
+    <hr />
+    <form asp-area="Admin" asp-controller="Product" asp-action="Add" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Tên Sản Phẩm</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Price" class="form-label">Giá</label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label">Mô Tả</label>
+            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="CategoryId" class="form-label">Danh Mục</label>
+            <select asp-for="CategoryId" class="form-select" asp-items="ViewBag.Categories">
+                <option value="">-- Chọn danh mục --</option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Hình Ảnh Đại Diện</label>
+            <input type="file" name="imageUrl" class="form-control" accept="image/*" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Ảnh Phụ (Nhiều ảnh)</label>
+            <input type="file" name="imageUrls" class="form-control" accept="image/*" multiple />
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-success">Thêm Sản Phẩm</button>
+            <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="btn btn-secondary">Hủy</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

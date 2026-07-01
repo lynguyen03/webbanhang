@@ -1,0 +1,147 @@
+@model _2380601309_NguyenHuuDieuLy_TH6.Models.Product
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- Gallery Column -->
+        <div class="col-md-6 mb-4">
+            <!-- Main Image Container -->
+            <div class="main-image-container mb-3 p-2 text-center d-flex align-items-center justify-content-center" style="height: 400px; overflow: hidden; position: relative;">
+                <img id="main-product-image" src="@(string.IsNullOrEmpty(Model.ImageUrl) ? "/images/no-image.png" : Model.ImageUrl)" alt="@Model.Name" class="img-fluid" style="max-height: 100%; max-width: 100%; object-fit: contain;" />
+            </div>
+
+            <!-- Thumbnail Slider Row -->
+            <div class="thumbnail-slider d-flex gap-2 overflow-auto pb-2 px-1">
+                <!-- First thumbnail is the main image -->
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <div class="thumbnail-item active-thumbnail p-1" style="width: 80px; height: 80px; cursor: pointer; flex-shrink: 0;" onclick="changeMainImage('@Model.ImageUrl', this)">
+                        <img src="@Model.ImageUrl" alt="@Model.Name" class="w-100 h-100" style="object-fit: cover; border-radius: 4px;" />
+                    </div>
+                }
+
+                <!-- Secondary images -->
+                @if (Model.Images != null)
+                {
+                    @foreach (var img in Model.Images)
+                    {
+                        <div class="thumbnail-item p-1" style="width: 80px; height: 80px; cursor: pointer; flex-shrink: 0;" onclick="changeMainImage('@img.Url', this)">
+                            <img src="@img.Url" alt="@Model.Name" class="w-100 h-100" style="object-fit: cover; border-radius: 4px;" />
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+        <!-- Product Details Column -->
+        <div class="col-md-6">
+            <h1 style="font-size: 2rem; font-weight: 800; color: #FFFFFE; margin-bottom: 1rem; letter-spacing: -0.02em;">@Model.Name</h1>
+            
+            <div class="d-flex align-items-center mb-4 gap-3">
+                <span style="font-size: 1.75rem; font-weight: 700; background: linear-gradient(135deg, #FF6B6B, #FF8E8E); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                    @Model.Price.ToString("0.00") VNĐ
+                </span>
+                <span class="badge bg-secondary" style="font-size: 0.8rem;">@((Model.Category?.Name ?? "No Category"))</span>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title mb-2">Mô Tả</h5>
+                    <p class="card-text" style="white-space: pre-line; line-height: 1.7;">@Model.Description</p>
+                </div>
+            </div>
+
+            <div class="d-flex flex-wrap gap-2 mb-4">
+                <button type="button" class="btn btn-primary btn-lg px-4 btn-add-cart" data-product-id="@Model.Id" style="flex: 1; min-width: 200px;">
+                    🛒 Thêm Giỏ Hàng
+                </button>
+                @if (User.IsInRole("Admin") || User.IsInRole("admin"))
+                {
+                    <a asp-action="Update" asp-route-id="@Model.Id" class="btn btn-warning btn-lg px-4">Sửa Sản Phẩm</a>
+                }
+                <a asp-action="Index" class="btn btn-outline-secondary btn-lg px-4">Quay Lại</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast notification -->
+<div id="cart-toast" class="cart-toast" style="display: none;">
+    <span id="cart-toast-message">Đã thêm vào giỏ hàng!</span>
+</div>
+
+<style>
+    /* Thumbnail scrollbar styling handled by site.css */
+    .thumbnail-slider::-webkit-scrollbar {
+        height: 6px;
+    }
+    .thumbnail-slider::-webkit-scrollbar-track {
+        background: rgba(255,255,255,0.03);
+        border-radius: 10px;
+    }
+    .thumbnail-slider::-webkit-scrollbar-thumb {
+        background: rgba(108, 99, 255, 0.3);
+        border-radius: 10px;
+    }
+    .thumbnail-slider::-webkit-scrollbar-thumb:hover {
+        background: rgba(108, 99, 255, 0.5);
+    }
+</style>
+
+<script>
+    function changeMainImage(imageUrl, thumbnailElement) {
+        // Change the source of the main product image
+        document.getElementById('main-product-image').src = imageUrl;
+
+        // Clear active class from all thumbnails
+        var thumbnails = document.getElementsByClassName('thumbnail-item');
+        for (var i = 0; i < thumbnails.length; i++) {
+            thumbnails[i].classList.remove('active-thumbnail');
+        }
+
+        // Apply active class to the clicked thumbnail
+        thumbnailElement.classList.add('active-thumbnail');
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Add to Cart via AJAX
+        document.querySelectorAll('.btn-add-cart').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var productId = this.getAttribute('data-product-id');
+                var button = this;
+
+                fetch('@Url.Action("AddToCart", "Cart")', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: 'productId=' + productId + '&quantity=1'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Update cart badge
+                        var badge = document.getElementById('cart-badge');
+                        if (badge) {
+                            badge.textContent = data.cartCount;
+                            badge.style.display = data.cartCount > 0 ? 'flex' : 'none';
+                        }
+
+                        // Toast
+                        var toast = document.getElementById('cart-toast');
+                        var msg = document.getElementById('cart-toast-message');
+                        msg.textContent = data.message;
+                        toast.style.display = 'block';
+                        setTimeout(function () {
+                            toast.style.display = 'none';
+                        }, 2500);
+                    }
+                })
+                .catch(err => {
+                    console.error('Error:', err);
+                    window.location.href = '@Url.Action("AddToCart", "Cart")' + '?productId=' + productId;
+                });
+            });
+        });
+    });
+</script>

@@ -1,0 +1,16 @@
+@model _2380601309_NguyenHuuDieuLy_TH6.Models.Product
+
+<div class="glass-card" style="max-width: 500px; margin: 2rem auto; text-align: center;">
+    <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
+    <h2 style="margin-bottom: 1rem;">Xóa Sản Phẩm</h2>
+    <p style="color: #A7A9BE; font-size: 1.05rem; margin-bottom: 2rem;">
+        Bạn có chắc chắn muốn xóa sản phẩm <strong style="color: #FF6B6B;">@Model.Name</strong>?
+    </p>
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <div class="d-flex gap-2 justify-content-center">
+            <button type="submit" class="btn btn-danger px-4">Xóa</button>
+            <a asp-action="Index" class="btn btn-secondary px-4">Hủy</a>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,20 @@
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center" style="padding: 4rem 0;">
+    <h1 style="font-size: 3rem; font-weight: 800; background: linear-gradient(135deg, #6C63FF, #FF6B6B); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1rem;">
+        Chào Mừng Đến Shop Online
+    </h1>
+    <p style="color: #A7A9BE; font-size: 1.15rem; max-width: 600px; margin: 0 auto 2rem;">
+        Khám phá các sản phẩm chất lượng cao với giá tốt nhất. Trải nghiệm mua sắm trực tuyến dễ dàng và tiện lợi.
+    </p>
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a asp-controller="Product" asp-action="Index" class="btn btn-primary btn-lg" style="padding: 0.75rem 2rem; font-size: 1rem;">
+            🛍️ Xem Sản Phẩm
+        </a>
+        <a asp-controller="Category" asp-action="Index" class="btn btn-outline-secondary btn-lg" style="padding: 0.75rem 2rem; font-size: 1rem;">
+            📁 Danh Mục
+        </a>
+    </div>
+</div>

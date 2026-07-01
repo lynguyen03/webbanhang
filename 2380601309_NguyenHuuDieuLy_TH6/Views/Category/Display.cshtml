@@ -1,0 +1,31 @@
+@model _2380601309_NguyenHuuDieuLy_TH6.Models.Category
+
+@{
+    ViewData["Title"] = "Category Details";
+}
+
+<div class="glass-card" style="max-width: 600px; margin: 0 auto;">
+    <h2>Chi Tiết Danh Mục</h2>
+
+    <div style="margin-top: 1.5rem;">
+        <dl class="row">
+            <dt class="col-sm-3">
+                ID
+            </dt>
+            <dd class="col-sm-9">
+                @Model.Id
+            </dd>
+            <dt class="col-sm-3">
+                Tên
+            </dt>
+            <dd class="col-sm-9">
+                @Model.Name
+            </dd>
+        </dl>
+    </div>
+    <hr />
+    <div class="d-flex gap-2">
+        <a asp-action="Update" asp-route-id="@Model.Id" class="btn btn-warning">Sửa</a>
+        <a asp-action="Index" class="btn btn-secondary">Quay Lại</a>
+    </div>
+</div>

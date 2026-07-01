@@ -1,0 +1,29 @@
+@model _2380601309_NguyenHuuDieuLy_TH6.Models.Category
+
+@{
+    ViewData["Title"] = "Thêm Danh Mục";
+}
+
+<div class="container mt-4">
+    <h2>Thêm Danh Mục Mới</h2>
+    <hr />
+    <form asp-action="Add" method="post">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="mb-3 col-md-6">
+            <label asp-for="Name" class="form-label fw-bold">Tên Danh Mục</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-success">Thêm Danh Mục</button>
+            <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

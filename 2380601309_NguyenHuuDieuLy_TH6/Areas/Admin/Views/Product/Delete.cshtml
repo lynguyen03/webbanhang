@@ -1,0 +1,32 @@
+@model _2380601309_NguyenHuuDieuLy_TH6.Models.Product
+
+@{
+    ViewData["Title"] = "Xóa Sản Phẩm";
+}
+
+<div class="container mt-4">
+    <h2>Xác Nhận Xóa Sản Phẩm</h2>
+    <hr />
+    <div class="alert alert-danger">
+        Bạn có chắc chắn muốn xóa sản phẩm <strong>@Model.Name</strong> không?
+    </div>
+
+    <dl class="row">
+        <dt class="col-sm-3">Tên sản phẩm</dt>
+        <dd class="col-sm-9">@Model.Name</dd>
+
+        <dt class="col-sm-3">Giá</dt>
+        <dd class="col-sm-9">@Model.Price.ToString("N0") đ</dd>
+
+        <dt class="col-sm-3">Mô tả</dt>
+        <dd class="col-sm-9">@Model.Description</dd>
+
+        <dt class="col-sm-3">Danh mục</dt>
+        <dd class="col-sm-9">@Model.Category?.Name</dd>
+    </dl>
+
+    <form asp-area="Admin" asp-controller="Product" asp-action="Delete" asp-route-id="@Model.Id" method="post">
+        <button type="submit" class="btn btn-danger">Xác Nhận Xóa</button>
+        <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="btn btn-secondary">Hủy</a>
+    </form>
+</div>

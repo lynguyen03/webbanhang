@@ -1,0 +1,68 @@
+@model _2380601309_NguyenHuuDieuLy_TH6.Models.Order
+
+@{
+    ViewData["Title"] = "Chi Tiết Đơn Hàng";
+}
+
+<div class="container mt-4">
+    <h2>Chi Tiết Đơn Hàng #@Model.Id</h2>
+    <hr />
+
+    <div class="card mb-4">
+        <div class="card-header bg-dark text-white">
+            <h5 class="mb-0">Thông tin khách hàng</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row mb-0">
+                <dt class="col-sm-3">Tên Khách Hàng</dt>
+                <dd class="col-sm-9">@Model.CustomerName</dd>
+
+                <dt class="col-sm-3">Số Điện Thoại</dt>
+                <dd class="col-sm-9">@Model.PhoneNumber</dd>
+
+                <dt class="col-sm-3">Địa Chỉ Giao Hàng</dt>
+                <dd class="col-sm-9">@Model.ShippingAddress</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-dark text-white">
+            <h5 class="mb-0">Thông tin đơn hàng</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row mb-0">
+                <dt class="col-sm-3">Ngày Đặt Hàng</dt>
+                <dd class="col-sm-9">@Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</dd>
+
+                <dt class="col-sm-3">Tổng Tiền Thanh Toán</dt>
+                <dd class="col-sm-9 fw-bold text-danger">@Model.TotalAmount.ToString("N0") đ</dd>
+
+                <dt class="col-sm-3">Trạng Thái Đơn Hàng</dt>
+                <dd class="col-sm-9">
+                    @if (Model.Status == "Đã giao")
+                    {
+                        <span class="badge bg-success">Đã giao</span>
+                    }
+                    else if (Model.Status == "Đang giao")
+                    {
+                        <span class="badge bg-primary">Đang giao</span>
+                    }
+                    else if (Model.Status == "Đang xử lý")
+                    {
+                        <span class="badge bg-warning text-dark">Đang xử lý</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger">Đã hủy</span>
+                    }
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Cập Nhật Trạng Thái</a>
+        <a asp-action="Index" class="btn btn-secondary">Quay Lại</a>
+    </div>
+</div>

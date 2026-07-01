@@ -1,0 +1,43 @@
+@model _2380601309_NguyenHuuDieuLy_TH6.Models.Order
+
+@{
+    ViewData["Title"] = "Cập Nhật Trạng Thái Đơn Hàng";
+}
+
+<div class="container mt-4">
+    <h2>Cập Nhật Trạng Thái Đơn Hàng #@Model.Id</h2>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label fw-bold">Khách Hàng:</label>
+                <p class="form-control-plaintext">@Model.CustomerName</p>
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-bold">Tổng Số Tiền:</label>
+                <p class="form-control-plaintext text-danger fw-bold">@Model.TotalAmount.ToString("N0") đ</p>
+            </div>
+
+            <form asp-action="Edit" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Id" />
+
+                <div class="mb-3">
+                    <label asp-for="Status" class="form-label fw-bold">Trạng Thái Đơn Hàng</label>
+                    <select asp-for="Status" class="form-select" name="status">
+                        <option value="Đang xử lý">Đang xử lý</option>
+                        <option value="Đang giao">Đang giao</option>
+                        <option value="Đã giao">Đã giao</option>
+                        <option value="Đã hủy">Đã hủy</option>
+                    </select>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">Lưu Thay Đổi</button>
+                    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

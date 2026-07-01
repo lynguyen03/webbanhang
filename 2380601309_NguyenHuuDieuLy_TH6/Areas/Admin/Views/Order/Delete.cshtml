@@ -1,0 +1,39 @@
+@model _2380601309_NguyenHuuDieuLy_TH6.Models.Order
+
+@{
+    ViewData["Title"] = "Xác Nhận Xóa Đơn Hàng";
+}
+
+<div class="container mt-4">
+    <h2>Xác Nhận Xóa Đơn Hàng #@Model.Id</h2>
+    <hr />
+
+    <div class="alert alert-danger">
+        <h5>Bạn có chắc chắn muốn xóa đơn hàng này không? Hành động này không thể hoàn tác.</h5>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <dl class="row mb-0">
+                <dt class="col-sm-3">Tên Khách Hàng</dt>
+                <dd class="col-sm-9">@Model.CustomerName</dd>
+
+                <dt class="col-sm-3">Ngày Đặt Hàng</dt>
+                <dd class="col-sm-9">@Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</dd>
+
+                <dt class="col-sm-3">Tổng Tiền</dt>
+                <dd class="col-sm-9 fw-bold text-danger">@Model.TotalAmount.ToString("N0") đ</dd>
+
+                <dt class="col-sm-3">Trạng Thái</dt>
+                <dd class="col-sm-9">@Model.Status</dd>
+            </dl>
+        </div>
+    </div>
+
+    <form asp-action="Delete" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Xóa Đơn Hàng</button>
+        <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+    </form>
+</div>

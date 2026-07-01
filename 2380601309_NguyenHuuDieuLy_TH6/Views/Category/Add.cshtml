@@ -1,0 +1,25 @@
+@model _2380601309_NguyenHuuDieuLy_TH6.Models.Category
+
+@{
+    ViewData["Title"] = "Add Category";
+}
+
+<div class="glass-card" style="max-width: 500px; margin: 0 auto;">
+    <h2>Thêm Danh Mục</h2>
+
+    <form asp-action="Add" method="post" style="margin-top: 1.5rem;">
+        <div class="form-group mb-3">
+            <label asp-for="Name" class="form-label">Tên Danh Mục</label>
+            <input asp-for="Name" class="form-control" placeholder="Nhập tên danh mục..." />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="d-flex gap-2 mt-4">
+            <button type="submit" class="btn btn-primary">Thêm</button>
+            <a asp-action="Index" class="btn btn-secondary">Quay Lại</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

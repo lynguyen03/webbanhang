@@ -1,0 +1,30 @@
+@model _2380601309_NguyenHuuDieuLy_TH6.Models.Category
+
+@{
+    ViewData["Title"] = "Xóa Danh Mục";
+}
+
+<div class="container mt-4">
+    <h2>Xác Nhận Xóa Danh Mục</h2>
+    <hr />
+
+    <div class="alert alert-danger">
+        <h5>Bạn có chắc chắn muốn xóa danh mục này không? Các sản phẩm thuộc danh mục này có thể bị ảnh hưởng.</h5>
+    </div>
+
+    <div class="card mb-4 col-md-6">
+        <div class="card-body">
+            <dl class="row mb-0">
+                <dt class="col-sm-4">Tên Danh Mục</dt>
+                <dd class="col-sm-8">@Model.Name</dd>
+            </dl>
+        </div>
+    </div>
+
+    <form asp-action="Delete" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Xóa Danh Mục</button>
+        <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+    </form>
+</div>

@@ -1,0 +1,76 @@
+@model _2380601309_NguyenHuuDieuLy_TH6.Models.Product
+
+@{
+    ViewData["Title"] = "Sửa Sản Phẩm";
+}
+
+<div class="container mt-4">
+    <h2>Sửa Sản Phẩm</h2>
+    <hr />
+    <form asp-area="Admin" asp-controller="Product" asp-action="Edit" asp-route-id="@Model.Id"
+          method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input asp-for="Id" type="hidden" />
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Tên Sản Phẩm</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Price" class="form-label">Giá</label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label">Mô Tả</label>
+            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="CategoryId" class="form-label">Danh Mục</label>
+            <select asp-for="CategoryId" class="form-select" asp-items="ViewBag.Categories">
+                <option value="">-- Chọn danh mục --</option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Hình Ảnh Đại Diện Hiện Tại</label><br />
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="@Model.ImageUrl" alt="Current Image" style="width:100px;height:100px;object-fit:cover;" class="mb-2" />
+                <input asp-for="ImageUrl" type="hidden" />
+            }
+            <input type="file" name="imageUrl" class="form-control" accept="image/*" />
+            <small class="text-muted">Chỉ chọn ảnh mới nếu muốn thay đổi ảnh đại diện</small>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Ảnh Phụ Hiện Tại</label><br />
+            @if (Model.Images != null && Model.Images.Count > 0)
+            {
+                <div class="d-flex flex-wrap gap-2 mb-2">
+                    @foreach (var img in Model.Images)
+                    {
+                        <img src="@img.Url" alt="Secondary Image" style="width:80px;height:80px;object-fit:cover;" class="border" />
+                    }
+                </div>
+            }
+            <input type="file" name="imageUrls" class="form-control" accept="image/*" multiple />
+            <small class="text-muted">Chọn thêm ảnh phụ (sẽ thêm vào danh sách hiện tại)</small>
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-primary">Lưu Thay Đổi</button>
+            <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="btn btn-secondary">Hủy</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

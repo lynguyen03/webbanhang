@@ -1,0 +1,26 @@
+@{
+    ViewData["Title"] = "Đặt Hàng Thành Công";
+    var orderId = ViewBag.OrderId;
+}
+
+<div class="d-flex flex-column align-items-center justify-content-center text-center mt-5">
+    <div style="font-size: 6rem; line-height: 1; margin-bottom: 1.5rem; color: #2ECC71;">
+        🎉
+    </div>
+    
+    <h1 style="font-weight: 800; color: #FFFFFE; margin-bottom: 1rem;">Đặt Hàng Thành Công!</h1>
+    
+    <p style="font-size: 1.1rem; color: #A7A9BE; max-width: 600px; margin-bottom: 2rem;">
+        Cảm ơn bạn đã tin tưởng và mua sắm tại cửa hàng của chúng tôi. 
+        Mã đơn hàng của bạn là <strong>#@orderId</strong>. Chúng tôi sẽ sớm liên hệ để xác nhận đơn hàng.
+    </p>
+
+    <div class="d-flex gap-3">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary btn-lg">
+            🏠 Trở về Trang Chủ
+        </a>
+        <a asp-controller="Product" asp-action="Index" class="btn btn-outline-secondary btn-lg">
+            🛍️ Tiếp Tục Mua Sắm
+        </a>
+    </div>
+</div>

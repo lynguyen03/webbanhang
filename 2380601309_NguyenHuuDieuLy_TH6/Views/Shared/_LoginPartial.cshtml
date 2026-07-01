@@ -1,0 +1,35 @@
+@using Microsoft.AspNetCore.Identity
+@using _2380601309_NguyenHuuDieuLy_TH6.Data
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<ul class="navbar-nav align-items-center">
+@if (SignInManager.IsSignedIn(User))
+{
+    <li class="nav-item">
+        <a class="nav-link fw-bold me-2" asp-area="Identity" asp-page="/Account/Manage/Index" title="Quản lý tài khoản" style="color: #A7A9BE !important;">
+            Xin chào, @(User.Identity?.Name ?? "Thành viên")!
+        </a>
+    </li>
+    @if (User.IsInRole("Admin") || User.IsInRole("admin"))
+    {
+        <li class="nav-item">
+            <a class="nav-link btn btn-outline-light btn-sm px-2 py-1 me-2" asp-area="Admin" asp-controller="Admin" asp-action="Index">Trang Admin</a>
+        </li>
+    }
+    <li class="nav-item">
+        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post">
+            <button type="submit" class="nav-link btn btn-link py-1 px-3 border-0" style="background: transparent; outline: none; color: #A7A9BE !important;">Đăng Xuất</button>
+        </form>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link register-link" asp-area="Identity" asp-page="/Account/Register">Đăng Ký</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link login-link" asp-area="Identity" asp-page="/Account/Login">Đăng Nhập</a>
+    </li>
+}
+</ul>
